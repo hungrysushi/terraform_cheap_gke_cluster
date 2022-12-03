@@ -1,0 +1,17 @@
+# a94b60d7fcf04e237c496c47689773e32519ff77
+title: "kubeip"
+description: "required permissions to run KubeIP"
+stage: "GA"
+includedPermissions:
+- compute.addresses.list
+- compute.instances.addAccessConfig
+- compute.instances.deleteAccessConfig
+- compute.instances.get
+- compute.instances.list
+- compute.projects.get
+- container.clusters.get
+- container.clusters.list
+- resourcemanager.projects.get
+- compute.networks.useExternalIp
+- compute.subnetworks.useExternalIp
+- compute.addresses.use
