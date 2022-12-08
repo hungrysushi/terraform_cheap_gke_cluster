@@ -11,15 +11,15 @@ resource "google_compute_subnetwork" "subnet" {
   name = var.subnet
   region = var.region
   network = google_compute_network.vpc[0].name
-  ip_cidr_range = "10.10.0.0/24"
+  ip_cidr_range = "10.142.0.0/20"
 
   secondary_ip_range {
     range_name = local.ip_range_pods
-    ip_cidr_range = "10.20.0.0/24"
+    ip_cidr_range = "10.88.0.0/14"
   }
 
   secondary_ip_range {
     range_name = local.ip_range_services
-    ip_cidr_range = "10.30.0.0/24"
+    ip_cidr_range = "10.92.0.0/20"
   }
 }
