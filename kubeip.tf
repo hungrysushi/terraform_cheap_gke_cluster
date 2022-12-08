@@ -13,6 +13,11 @@ resource "google_service_account" "kubeip_service_account" {
   display_name = "kubeIP"
 }
 
+resource "google_service_account_key" "kubeip-key" {
+  service_account_id = google_service_account.kubeip_service_account.name
+  public_key_type    = "TYPE_X509_PEM_FILE"
+}
+
 resource "google_project_iam_custom_role" "kubeip" {
   role_id = "kubeip"
   title = local.roles["title"]
@@ -43,7 +48,7 @@ resource "kubectl_manifest" "kubeip-configmap" {
   #   ignore_changes = all
   # }
 
-  depends_on= [
+  depends_on = [
     module.gke
   ]
 
@@ -55,13 +60,30 @@ resource "kubectl_manifest" "kubeip-deployment" {
   #   ignore_changes = all
   # }
 
-  depends_on= [
+  depends_on = [
     module.gke
   ]
 
   for_each = local.kubeip_deployment_yamls
 
   yaml_body = each.value
+}
+
+resource "kubectl_manifest" "kubeip-key" {
+  depends_on = [
+    module.gke
+  ]
+
+  yaml_body = <<EOT
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kubeip-key
+  namespace: kube-system
+type: Opaque
+data:
+  key.json: ${google_service_account_key.kubeip-key.private_key}
+EOT
 }
 
 locals {
