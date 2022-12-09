@@ -101,3 +101,16 @@ locals {
     var.additional_pools_metadata,
   )
 }
+
+resource "google_compute_firewall" "ingress-rule" {
+  name = "node-ingress-rule"
+  network = var.vpc
+
+  allow {
+    protocol = "tcp"
+    ports = [80, 443]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags = ["ingress-pool"]
+}
