@@ -96,7 +96,7 @@ variable "additional_pools" {
       name         = "default-pool"
       auto_upgrade = true
 
-      autoscaling     = false
+      autoscaling     = true
       min_count       = 1
       max_count       = 10
       max_surge       = 0
