@@ -13,7 +13,7 @@ variable "regional_cluster" {
 
 variable "kube_version" {
   description = "Kubernetes version"
-  default     = "1.25"
+  default     = "latest"
 }
 
 variable "region" {
@@ -73,6 +73,7 @@ variable "ingress_pool" {
       machine_type = "e2-micro"
       preemptible  = true
       disk_size_gb = 10
+      disk_type    = "pd-standard"
     },
     tags = [
       "ingress-pool",
@@ -103,7 +104,8 @@ variable "additional_pools" {
 
       machine_type = "e2-standard-2"
       preemptible  = true
-      disk_size_gb = 20
+      disk_size_gb = 10
+      disk_type    = "pd-standard"
     }
   ]
 }
