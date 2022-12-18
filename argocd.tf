@@ -25,11 +25,11 @@ resource "helm_release" "argo-cd" {
     ignore_changes = all
   }
 
-  name = "argocd"
-  namespace = "argocd"
+  name       = "argocd"
+  namespace  = "argocd"
   repository = "https://argoproj.github.io/argo-helm"
-  chart = "argo-cd"
-  version = var.argocd_version
+  chart      = "argo-cd"
+  version    = var.argocd_version
 
   values = [
     var.argocd_values
