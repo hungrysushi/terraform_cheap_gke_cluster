@@ -101,6 +101,10 @@ locals {
 }
 
 resource "google_compute_firewall" "ingress-rule" {
+  depends_on = [
+    google_compute_network.vpc
+  ]
+
   name    = "${var.name}-node-ingress-rule"
   network = var.vpc
 
