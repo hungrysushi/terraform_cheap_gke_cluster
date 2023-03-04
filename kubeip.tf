@@ -9,7 +9,7 @@ resource "google_compute_address" "ingress" {
 }
 
 resource "google_service_account" "kubeip_service_account" {
-  account_id   = "kubeip-service-account"
+  account_id   = "kubeip-${var.name}"
   display_name = "kubeIP"
 }
 
@@ -19,7 +19,7 @@ resource "google_service_account_key" "kubeip-key" {
 }
 
 resource "google_project_iam_custom_role" "kubeip" {
-  role_id     = "kubeip"
+  role_id     = "kubeip_${replace(var.name, "-", "_")}"
   title       = local.roles["title"]
   description = local.roles["description"]
   stage       = local.roles["stage"]
@@ -61,7 +61,8 @@ resource "kubectl_manifest" "kubeip-deployment" {
   # }
 
   depends_on = [
-    module.gke
+    module.gke,
+    kubectl_manifest.kubeip-key
   ]
 
   for_each = local.kubeip_deployment_yamls

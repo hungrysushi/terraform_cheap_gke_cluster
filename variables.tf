@@ -97,14 +97,14 @@ variable "additional_pools" {
       auto_upgrade = true
 
       autoscaling     = true
-      min_count       = 1
+      min_count       = 0
       max_count       = 10
       max_surge       = 0
       max_unavailable = 1
 
       machine_type = "e2-standard-2"
       preemptible  = true
-      disk_size_gb = 10
+      disk_size_gb = 20
       disk_type    = "pd-standard"
     }
   ]
@@ -162,4 +162,5 @@ variable "argocd_version" {
 
 variable "argocd_values" {
   description = "YAML values to use with chart"
+  default = ""
 }

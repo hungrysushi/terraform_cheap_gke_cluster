@@ -101,7 +101,7 @@ locals {
 }
 
 resource "google_compute_firewall" "ingress-rule" {
-  name    = "node-ingress-rule"
+  name    = "${var.name}-node-ingress-rule"
   network = var.vpc
 
   allow {
